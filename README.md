@@ -1,0 +1,3 @@
+# Symfony Safe Translations
+
+WIP

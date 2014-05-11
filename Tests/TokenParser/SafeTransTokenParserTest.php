@@ -3,7 +3,6 @@ namespace Arthens\SafeTranslation\Tests\TokenParser;
 
 use Arthens\SafeTranslation\Extension\SafeTransExtension;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
-use Symfony\Component\Translation\IdentityTranslator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\Translator;
 
@@ -72,7 +71,7 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;, you are <b>awesome</b>", $html);
     }
 
-    public function testDomain()
+    public function testSafeTransAndDomain()
     {
         $html = $this->twig->render("{% safetrans from 'dom' into 'it' %}Hello %name%{% endsafetrans %}", array(
             'name' => "<script>alert();</script>",

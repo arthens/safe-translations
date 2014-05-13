@@ -62,7 +62,7 @@ In this case `username` is escaped, and `message` is not.
 - Add `arthens/safe-translations` to your `composer.json`.
 - Register `Arthens\SafeTranslation\Extension\SafeTransExtension` in your `Twig_Enviroment`.
 
-and you should be good to go.
+and you should be good to go (assuming that you have already configured Symfony Translations).
 
 ## FAQ
 
@@ -72,7 +72,7 @@ Use `{% safetrans %}` and `{% safetranschoice %}`.
 
 #### 2. What options do `safetrans` and `safetranschoice` support?
 
-They are built on top of Symfony Translations, and they support the same options.
+They are built on top of Symfony Translations, and they support iexactly the same options.
 See [Symfony Translations](http://symfony.com/doc/current/book/translation.html)
 
 #### 3. How do I extract the strings from my template?
@@ -83,7 +83,7 @@ which means that from the point of view of the extractor there's no different be
 #### 4. Why do I need to use `|unescaped`? Can't it guess it from the context?
 
 Not yet. Symfony Translations and Twig are quite different, and I couldn't find a way to do it automagically.
-This might change with future versions.
+This might change with future versions. Pull requests are welcome.
 
 #### 5. Is this production ready?
 

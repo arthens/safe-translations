@@ -10,7 +10,7 @@ class SafeTransNode extends TransNode
     /**
      * Re-define compileString to automatically escape variables, unless they have been marked as |unescaped
      */
-    protected function compileString(\Twig_NodeInterface $body, \Twig_Node_Expression_Array $vars)
+    protected function compileString(\Twig_NodeInterface $body, \Twig_Node_Expression_Array $vars, $ignoreStrictCheck = false)
     {
         // Extract the message to be translated, or return if it doesn't need translations
         if ($body instanceof \Twig_Node_Expression_Constant) {

@@ -15,7 +15,7 @@ class SafeTransExtensionTest extends \PHPUnit_Framework_TestCase
 
         // filters
         $filters = $extension->getFilters();
-        $this->assertTrue(array_key_exists("unescaped", $filters));
+        $this->assertEquals("unescaped", $filters[0]->getName());
 
         // tags
         $tokens = $extension->getTokenParsers();

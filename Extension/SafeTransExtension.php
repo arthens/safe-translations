@@ -3,6 +3,7 @@ namespace Arthens\SafeTranslation\Extension;
 
 use Arthens\SafeTranslation\TokenParser\SafeTransChoiceTokenParser;
 use Arthens\SafeTranslation\TokenParser\SafeTransTokenParser;
+use Twig_SimpleFilter as SimpleFilter;
 
 class SafeTransExtension extends \Twig_Extension
 {
@@ -14,7 +15,7 @@ class SafeTransExtension extends \Twig_Extension
     public function getFilters()
     {
         return array(
-            self::DO_NOT_ESCAPE => new \Twig_Filter_Method($this, 'unescaped'),
+             new SimpleFilter(self::DO_NOT_ESCAPE, array($this, 'unescaped')),
         );
     }
 

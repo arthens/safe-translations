@@ -22,11 +22,11 @@ class SafeTransChoiceTokenParser extends TransChoiceTokenParser
         $node = parent::parse($token);
 
         return new SafeTransNode(
-            $node->getNode('body'),
-            $node->getNode('domain'),
-            $node->getNode('count'),
-            $node->getNode('vars'),
-            $node->getNode('locale'),
+            $node->hasNode('body') ? $node->getNode('body') : null,
+            $node->hasNode('domain') ? $node->getNode('domain') : null,
+            $node->hasNode('count') ? $node->getNode('count') : null,
+            $node->hasNode('vars') ? $node->getNode('vars') : null,
+            $node->hasNode('locale') ? $node->getNode('locale') : null,
             $node->getLine(),
             $this->getTag()
         );

@@ -21,12 +21,13 @@ class SafeTransTokenParser extends TransTokenParser
         /** @var TransNode $node */
         $node = parent::parse($token);
 
+
         return new SafeTransNode(
-            $node->getNode('body'),
-            $node->getNode('domain'),
+            $node->hasNode('body') ? $node->getNode('body') : null,
+            $node->hasNode('domain') ? $node->getNode('domain') : null,
             null,
-            $node->getNode('vars'),
-            $node->getNode('locale'),
+            $node->hasNode('vars') ? $node->getNode('vars') : null,
+            $node->hasNode('locale') ? $node->getNode('locale') : null,
             $node->getLine(),
             $this->getTag()
         );

@@ -3,8 +3,8 @@
     "description": "Automatically escape variables when using Symfony Translations",
     "license": "MIT",
     "require": {
-        "php": ">=5.3.2",
-        "twig/twig": "~1.13",
+        "php": ">=5.6.0",
+        "twig/twig": "~2",
         "symfony/twig-bridge": "~2.3",
         "symfony/translation": "~2.3"
     },

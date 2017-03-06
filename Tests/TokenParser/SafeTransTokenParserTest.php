@@ -23,8 +23,7 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
             'Hello %name%' => 'Ciao %name%',
         ), 'it', 'dom');
 
-        $loader = new \Twig_Loader_String();
-        $this->twig = new \Twig_Environment($loader);
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Array());
         $this->twig->addExtension(new TranslationExtension($this->translator));
         $this->twig->addExtension(new SafeTransExtension());
     }
@@ -34,7 +33,9 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testTrans()
     {
-        $html = $this->twig->render("{% trans %}Hello %name%{% endtrans %}", array(
+        $template = $this->twig->createTemplate("{% trans %}Hello %name%{% endtrans %}");
+
+        $html = $template->render(array(
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello <script>alert();</script>", $html);
@@ -42,7 +43,9 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTrans()
     {
-        $html = $this->twig->render("{% safetrans %}Hello %name%{% endsafetrans %}", array(
+        $template = $this->twig->createTemplate("{% safetrans %}Hello %name%{% endsafetrans %}");
+
+        $html = $template->render(array(
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;", $html);
@@ -50,8 +53,9 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransAndWith()
     {
-        $template = "{% safetrans with {'%name%': name} %}Hello %name%{% endsafetrans %}";
-        $html = $this->twig->render($template, array(
+        $template = $this->twig->createTemplate("{% safetrans with {'%name%': name} %}Hello %name%{% endsafetrans %}");
+
+        $html = $template->render(array(
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;", $html);
@@ -59,12 +63,12 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransWithNoEscape()
     {
-        $template = "{% safetrans with {
+        $template = $this->twig->createTemplate("{% safetrans with {
             '%name%': name,
             '%what%': what|unescaped,
-            } %}Hello %name%, you are %what%{% endsafetrans %}";
+            } %}Hello %name%, you are %what%{% endsafetrans %}");
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'name' => "<script>alert();</script>",
             'what' => "<b>awesome</b>",
         ));
@@ -73,7 +77,9 @@ class SafeTransTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransAndDomain()
     {
-        $html = $this->twig->render("{% safetrans from 'dom' into 'it' %}Hello %name%{% endsafetrans %}", array(
+        $template = $this->twig->createTemplate("{% safetrans from 'dom' into 'it' %}Hello %name%{% endsafetrans %}");
+
+        $html = $template->render(array(
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Ciao &lt;script&gt;alert();&lt;/script&gt;", $html);

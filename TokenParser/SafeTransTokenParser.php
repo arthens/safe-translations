@@ -28,7 +28,7 @@ class SafeTransTokenParser extends TransTokenParser
             null,
             $node->hasNode('vars') ? $node->getNode('vars') : null,
             $node->hasNode('locale') ? $node->getNode('locale') : null,
-            $node->getLine(),
+            $node->getTemplateLine(),
             $this->getTag()
         );
     }

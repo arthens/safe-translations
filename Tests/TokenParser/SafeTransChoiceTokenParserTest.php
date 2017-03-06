@@ -23,8 +23,7 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
             '{0} Hello %name%|{1} Goodbye %name%' => '{0} Ciao %name%|{1} Arrivederci %name%',
         ), 'it', 'dom');
 
-        $loader = new \Twig_Loader_String();
-        $this->twig = new \Twig_Environment($loader);
+        $this->twig = new \Twig_Environment(new \Twig_Loader_Array());
         $this->twig->addExtension(new TranslationExtension($this->translator));
         $this->twig->addExtension(new SafeTransExtension());
     }
@@ -34,15 +33,14 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransChoice()
     {
-        $template = "{% transchoice count %}{0} Hello %name%|{1} Goodbye %name%{% endtranschoice %}";
-
-        $html = $this->twig->render($template, array(
+        $template = $this->twig->createTemplate("{% transchoice count %}{0} Hello %name%|{1} Goodbye %name%{% endtranschoice %}");
+        $html = $template->render(array(
             'count' => 0,
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello <script>alert();</script>", $html);
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 1,
             'name' => "<script>alert();</script>",
         ));
@@ -51,15 +49,15 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransChoice()
     {
-        $template = "{% safetranschoice count %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}";
+        $template = $this->twig->createTemplate("{% safetranschoice count %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}");
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 0,
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;", $html);
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 1,
             'name' => "<script>alert();</script>",
         ));
@@ -68,15 +66,15 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransChoiceAndWith()
     {
-        $template = "{% safetranschoice count with {'%name%': name} %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}";
+        $template = $this->twig->createTemplate("{% safetranschoice count with {'%name%': name} %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}");
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 0,
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;", $html);
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 1,
             'name' => "<script>alert();</script>",
         ));
@@ -85,19 +83,19 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransChoiceAndWithNoEscape()
     {
-        $template = "{% safetranschoice count with {
+        $template = $this->twig->createTemplate("{% safetranschoice count with {
             '%name%': name,
             '%what%': what|unescaped,
-            } %}{0} Hello %name%, you are %what%|{1} Goodbye %name%, you are %what%{% endsafetranschoice %}";
+            } %}{0} Hello %name%, you are %what%|{1} Goodbye %name%, you are %what%{% endsafetranschoice %}");
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 0,
             'name' => "<script>alert();</script>",
             'what' => "<b>awesome</b>",
         ));
         $this->assertEquals("Hello &lt;script&gt;alert();&lt;/script&gt;, you are <b>awesome</b>", $html);
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 1,
             'name' => "<script>alert();</script>",
             'what' => "<b>awesome</b>",
@@ -107,15 +105,15 @@ class SafeTransChoiceTokenParserTest extends \PHPUnit_Framework_TestCase
 
     public function testSafeTransChoiceAndDomain()
     {
-        $template = "{% safetranschoice count from 'dom' into 'it' %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}";
+        $template = $this->twig->createTemplate("{% safetranschoice count from 'dom' into 'it' %}{0} Hello %name%|{1} Goodbye %name%{% endsafetranschoice %}");
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 0,
             'name' => "<script>alert();</script>",
         ));
         $this->assertEquals("Ciao &lt;script&gt;alert();&lt;/script&gt;", $html);
 
-        $html = $this->twig->render($template, array(
+        $html = $template->render(array(
             'count' => 1,
             'name' => "<script>alert();</script>",
         ));

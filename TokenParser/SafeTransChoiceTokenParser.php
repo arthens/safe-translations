@@ -12,7 +12,7 @@ class SafeTransChoiceTokenParser extends TransChoiceTokenParser
      *
      * @param  \Twig_Token         $token A Twig_Token instance
      * @throws \Twig_Error_Syntax
-     * @return \Twig_NodeInterface A Twig_NodeInterface instance
+     * @return SafeTransNode A Twig_NodeInterface instance
      */
     public function parse(\Twig_Token $token)
     {
@@ -27,7 +27,7 @@ class SafeTransChoiceTokenParser extends TransChoiceTokenParser
             $node->hasNode('count') ? $node->getNode('count') : null,
             $node->hasNode('vars') ? $node->getNode('vars') : null,
             $node->hasNode('locale') ? $node->getNode('locale') : null,
-            $node->getLine(),
+            $node->getTemplateLine(),
             $this->getTag()
         );
     }

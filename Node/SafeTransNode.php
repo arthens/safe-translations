@@ -23,14 +23,14 @@ class SafeTransNode extends TransNode
 
         // Escape variable passed using 'with'
         // {% safetrans with {...} %}{% endsafetrans %}
-        $vars = $this->escapeWithVariables($vars, $body->getLine());
+        $vars = $this->escapeWithVariables($vars, $body->getTemplateLine());
 
         // Escape variables that needs to be read from $context
         // {% safetrans %}...{% endsafetrans %}
-        $vars = $this->escapeContextVariables($msg, $vars, $body->getLine());
+        $vars = $this->escapeContextVariables($msg, $vars, $body->getTemplateLine());
 
         return array(
-            new \Twig_Node_Expression_Constant(str_replace('%%', '%', trim($msg)), $body->getLine()),
+            new \Twig_Node_Expression_Constant(str_replace('%%', '%', trim($msg)), $body->getTemplateLine()),
             $vars
         );
     }

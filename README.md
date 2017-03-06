@@ -4,6 +4,12 @@
 
 [![Build Status](https://travis-ci.org/arthens/safe-translations.svg?branch=master)](https://travis-ci.org/arthens/safe-translations)
 
+## Compatibility
+
+Version 1.0 is PHP 7.* and Twig 2.* only.
+
+Version 0.4 is the last version supporting PHP 5.* and Twig 1.*
+
 ## The problem
 
 [Twig](http://twig.sensiolabs.org/) is a great rendering library, and it's also awesome for protecting against
@@ -87,4 +93,4 @@ This might change with future versions. Pull requests are welcome.
 
 #### 5. Is this production ready?
 
-Try it out and decide yourself. [99designs](http://99designs.com) has been using it for longer than 1 year without any problem.
+[99designs](https://99designs.com) has been using it in production since 2013.

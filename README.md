@@ -42,7 +42,7 @@ which means that your templates are unsecure by default, and it's now your respo
 every time you use them. Not the end of the world, but wouldn't it be better if variables were automatically escaped like in Twig?
 
 Note: this problem only applies to tokens. If you use the `|trans` filter then you are ok, because everything is escaped
-(unless you also use `|raw`, in that case you have a problem).
+(unless you also use `|raw`, in that case you have a problem). See [documentation note](https://symfony.com/doc/current/translation.html#translation-filters).
 
 ## My solution
 
